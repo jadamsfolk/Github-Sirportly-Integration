@@ -7,7 +7,6 @@ final Class System {
     );
 
     final public function addToExpectedConsts($data){
-
         if(!empty($data)){
             if(is_array($data)){
                 array_merge($this->_expected_constants, $data);
@@ -18,7 +17,6 @@ final Class System {
     }
 
     final public function configErrorCheck(){
-
         $message = false;
 
         try{
