@@ -14,6 +14,16 @@ $sys = new System();
 if(!$msg = $sys->configErrorCheck()){
     // TODO: Gather the Github data here
 
+    ob_start();
+    var_dump($_GET);
+    echo '-------------------------------------';
+    var_dump($_POST);
+    $contents = ob_get_contents();
+    ob_end_clean();
+    error_log($contents, 3, ROOT_DIR.'logs'.DS.'github.log');
+
+    die;
+
     $name = '';
     $email = '';
     $ticket_number = '';
