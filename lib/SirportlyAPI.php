@@ -85,7 +85,6 @@ final class SirportlyAPI {
     }
 
     final public function postToTicket($author_name, $author_email, $ticketRef, $message, $subject = null){
-
         $path = '/api/v2/tickets/post_update';
         $params = array(
             'ticket' => $ticketRef,
@@ -94,17 +93,18 @@ final class SirportlyAPI {
             'author_email' => $author_email,
         );
 
-        // Check if the user exists, if so add the userID to the parameters
-        if($user = $this->userLookupByEmail($author_email)){
-            $params['user'] = $user->id;
-            $params['private'] = 1;
-        }
-
         if(!is_null($subject)){
             $params['subject'] = $subject;
         }
 
-        return $this->_sendRequest($path, $params);
+        // Check if the user exists, if so add the userID to the parameters
+        if($user = $this->userLookupByEmail($author_email)){
+            $params['user'] = $user->id;
+            $params['private'] = 1;
+
+            // Only post if user is recognised
+            return $this->_sendRequest($path, $params);
+        }
     }
 
     /**
