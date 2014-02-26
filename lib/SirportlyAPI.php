@@ -59,6 +59,15 @@ final class SirportlyAPI {
         return $this->_sendRequest($path);
     }
 
+    final public function getTicket($reference){
+        $path = '/api/v2/tickets/ticket';
+        $params = array(
+            'ticket' => $reference,
+        );
+
+        return $this->_sendRequest($path, $params);
+    }
+
     final public function findTicket($query){
         $path = '/api/v2/tickets/search';
         $params = array(
