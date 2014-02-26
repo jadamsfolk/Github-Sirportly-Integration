@@ -1,12 +1,13 @@
 <?php
 final class SirportlyAPI {
 
-    private $_token, $_secret;
+    private $_token, $_secret, $_logging;
     private $_api_basepath = 'http://api.sirportly.com';
 
-    public function __construct($token, $secret){
+    public function __construct($token, $secret, $logging = false){
         $this->_token = $token;
         $this->_secret = $secret;
+        $this->_logging = $logging;
     }
 
     final private function _sendRequest($path, $params = array()){
@@ -30,7 +31,13 @@ final class SirportlyAPI {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
             }
 
-            if(!$return = curl_exec($ch)){
+            $return = curl_exec($ch);
+
+            if($this->_logging){
+                error_log(date('d/m/Y G:i:s').PHP_EOL.'path: '.$path.PHP_EOL.'params: '.$params.PHP_EOL.'return: '.$return.PHP_EOL.'*******************'.PHP_EOL, 3, ROOT_DIR.'logs'.DS.'sirportly.log');
+            }
+
+            if(!$return){
                 throw new LoggedException('Sirportly API unresponsive');
             } else {
                 $return = json_decode($return);
