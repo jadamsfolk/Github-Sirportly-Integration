@@ -27,7 +27,7 @@ if(!$sys->configErrorCheck()){
                     preg_match_all("/\[.*?\]/", $commit->message, $matches);
                 }
 
-                // If matches exist, loop through, pull the ticket number out, check if a ticket exists, post to sirportly
+                // If matches exist, loop through, pull the ticket number out, check if a ticket exists, post to Sirportly
                 if(!empty($matches[0]) && is_array($matches[0])){
                     foreach($matches[0] as $ticket_reference){
                         $ticket_reference = str_replace(array('[', ']'), '', $ticket_reference);
