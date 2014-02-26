@@ -8,3 +8,4 @@
 
 # App Specific
 config.php
+logs/*
