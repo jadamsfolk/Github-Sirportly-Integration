@@ -90,6 +90,7 @@ final class SirportlyAPI {
         // Check if the user exists, if so add the userID to the parameters
         if($user = $this->userLookupByEmail($author_email)){
             $params['user'] = $user->id;
+            $params['private'] = 1;
         }
 
         if(!is_null($subject)){

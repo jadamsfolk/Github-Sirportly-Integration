@@ -6,12 +6,6 @@ final Class System {
         'SIRPORTLY_TOKEN', 'SIRPORTLY_SECRET',
     );
 
-    public static function autoLoad($class){
-
-        set_include_path(ROOT_DIR.'lib'.DS);
-        spl_autoload($class);
-    }
-
     final public function addToExpectedConsts($data){
 
         if(!empty($data)){
