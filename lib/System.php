@@ -2,8 +2,8 @@
 final Class System {
 
     private $_expected_constants = array(
-        'DS', 'ROOT_DIR',
-        'SIRPORTLY_TOKEN',
+        'DS', 'ROOT_DIR', 'API_TIMEOUT',
+        'SIRPORTLY_TOKEN', 'SIRPORTLY_SECRET',
     );
 
     public static function autoLoad($class){

@@ -12,17 +12,22 @@ $sys = new System();
 
 // Check for errors in the config
 if(!$msg = $sys->configErrorCheck()){
+    // TODO: Gather the Github data here
 
-    // Gather the data and pass it in to the Github obj for processing
+    $name = '';
+    $email = '';
+    $ticket_number = '';
+    $message = '';
 
+    // Load Sirportly and pass the Github data in
+    $sirportly_api = new SirportlyAPI(SIRPORTLY_TOKEN, SIRPORTLY_SECRET);
 
-    // Load and pass the data to Sirportly
-
-
-    // Report success/failure (failures added to apperror.log)
-
-    die('Success!');
-
-} else {
-    die($msg);
+    // Perform the post
+    if($sirportly_api->postToTicket($name, $email, $ticket_number, $message)){
+        $msg = 'success!';
+    } else {
+        $msg = 'failed';
+    }
 }
+
+die($msg);
