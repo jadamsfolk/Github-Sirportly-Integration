@@ -37,7 +37,7 @@ if(!$sys->configErrorCheck()){
                             $name = $commit->author->name;
                             $email = $commit->author->email;
                             $ticket_reference = $ticket_reference;
-                            $message = trim(preg_replace('/\[[^)]*\]|[\[\]]/', '', $commit->message));
+                            $message = 'Commit message'.PHP_EOL.trim(preg_replace('/\[[^)]*\]|[\[\]]/', '', $commit->message)).PHP_EOL.PHP_EOL.$commit->url;
 
                             // Perform the post
                             if($sirportly_api->postToTicket($name, $email, $ticket_reference, $message)){
