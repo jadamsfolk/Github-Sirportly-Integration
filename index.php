@@ -16,6 +16,7 @@ if(!$sys->configErrorCheck()){
     if(!empty($_POST['payload'])){
         $payload = json_decode($_POST['payload']);
 
+        // Ensure that the payload contains commits
         if(!empty($payload->commits)){
             // Load Sirportly and pass the Github data in
             $sirportly_api = new SirportlyAPI(SIRPORTLY_TOKEN, SIRPORTLY_SECRET);
@@ -31,6 +32,7 @@ if(!$sys->configErrorCheck()){
                     foreach($matches[0] as $ticket_reference){
                         $ticket_reference = str_replace(array('[', ']'), '', $ticket_reference);
 
+                        // Check that the ticket exists in sirportly
                         if($sirportly_api->getTicket($ticket_reference)){
                             $name = $commit->author->name;
                             $email = $commit->author->email;
