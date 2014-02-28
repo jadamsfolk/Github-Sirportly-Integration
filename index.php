@@ -66,3 +66,5 @@ if(!empty($msgs) && is_array($msgs)){
         echo $msg;
     }
 }
+
+// TEST
