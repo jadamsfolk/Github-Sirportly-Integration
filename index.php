@@ -14,7 +14,12 @@ $sys = new System();
 // Check for errors in the config
 if(!$sys->configErrorCheck()){
     if(!empty($_POST['payload'])){
-        $payload = json_decode($_POST['payload']);
+        if(get_magic_quotes_gpc ()){
+            $payload = stripslashes($_POST['payload']);
+            $payload = json_decode($payload);
+        } else {
+            $payload = json_decode($_POST['payload']);
+        }
 
         // Ensure that the payload contains commits
         if(!empty($payload->commits)){
@@ -22,6 +27,8 @@ if(!$sys->configErrorCheck()){
             $sirportly_api = new SirportlyAPI(SIRPORTLY_TOKEN, SIRPORTLY_SECRET, true);
 
             foreach($payload->commits as $commit){
+                $matches = array();
+
                 // Check for square square brackets in the message, pop the result into $matches
                 if($commit->message){
                     preg_match_all("/\[.*?\]/", $commit->message, $matches);
@@ -63,6 +70,6 @@ if(!$sys->configErrorCheck()){
 
 if(!empty($msgs) && is_array($msgs)){
     foreach($msgs as $msg){
-        echo $msg;
+        echo $msg.'<br>';
     }
 }
