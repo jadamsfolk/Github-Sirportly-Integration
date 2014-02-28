@@ -28,3 +28,8 @@ Put [xx-123] anywhere in the commit message where xx-123 represents the Sirportl
 You can also add variables to the commit message which will be parsed by Sirportly and added to the message...
 
 http://sirportly.com/docs/admin/advanced-features/ticket-variables
+
+## Known Issues / Future developments
+
+If the webhook exists on both a forked repo and the original the message will be pushed to Sirportly when the code is submitted to the forked version then again when the fork is pulled.
+
