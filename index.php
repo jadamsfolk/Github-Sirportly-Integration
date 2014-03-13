@@ -45,9 +45,11 @@ if(!$sys->configErrorCheck()){
                             $email = $commit->author->email;
                             $ticket_reference = $ticket_reference;
                             $message = 'Github commit added:'.PHP_EOL.$commit->url.PHP_EOL.PHP_EOL.trim(preg_replace('/\[[^)]*\]|[\[\]]/', '', $commit->message));
+                            $subject = 'Github commit';
+                            $custom_fields = array('github-commit' => $commit->id);
 
                             // Perform the post
-                            if($sirportly_api->postToTicket($name, $email, $ticket_reference, $message)){
+                            if($sirportly_api->postToTicket($name, $email, $ticket_reference, $message, $commit_reference, $custom_fields, $subject)){
                                 $msgs[] = 'Sirportly API post success!';
                             } else {
                                 $msgs[] = 'Sirportly API post failed';

@@ -84,7 +84,16 @@ final class SirportlyAPI {
         return $this->_sendRequest($path, $params);
     }
 
-    final public function postToTicket($author_name, $author_email, $ticketRef, $message, $subject = null){
+    final public function updateTicket($reference, $params = array()){
+        $path = '/api/v2/tickets/update';
+
+        $params['ticket'] = $reference;
+
+        return $this->_sendRequest($path, $params);
+    }
+
+    final public function postToTicket($author_name, $author_email, $ticketRef, $message, $subject = null, $customFields = array()){
+        $result = false;
         $path = '/api/v2/tickets/post_update';
         $params = array(
             'ticket' => $ticketRef,
@@ -92,6 +101,15 @@ final class SirportlyAPI {
             'author_name' => $author_name,
             'author_email' => $author_email,
         );
+
+        if(!empty($customFields)){
+            // Custom fields are part of the ticket, not the post so we need to update these separately
+            $customParams = array();
+
+            foreach($customFields as $key => $customField){
+                $customParams["custom[$key]"] = $customField;
+            }
+        }
 
         if(!is_null($subject)){
             $params['subject'] = $subject;
@@ -103,8 +121,13 @@ final class SirportlyAPI {
             $params['private'] = 1;
 
             // Only post if user is recognised
-            return $this->_sendRequest($path, $params);
+            $this->updateTicket($ticketRef, $customParams);
+            $this->_sendRequest($path, $params);
+
+            $result = true;
         }
+
+        return $result;
     }
 
     /**
